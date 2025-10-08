@@ -1,0 +1,83 @@
+# 🚗 Abarth
+
+Projeto desenvolvido com **React + TypeScript + Vite**, estilizado com **Tailwind CSS** e hospedado no **Netlify**.
+
+🔗 **Acesse o projeto:** [abarth.netlify.app](https://abarth.netlify.app/)
+
+---
+
+## 🧠 Sobre o projeto
+
+O **Abarth** é um projeto desenvolvido para fins de estudo e prática em tecnologias modernas do ecossistema front-end.  
+O objetivo principal é aplicar conceitos de componentes reutilizáveis, boas práticas com TypeScript e estilização com Tailwind CSS.
+
+---
+
+## 🛠️ Tecnologias utilizadas
+
+- ⚛️ **React** — Biblioteca para construção de interfaces.
+- 🟦 **TypeScript** — Tipagem estática e segurança no código.
+- ⚡ **Vite** — Ferramenta moderna para build e desenvolvimento rápido.
+- 🎨 **Tailwind CSS** — Framework utilitário de CSS.
+- 🧹 **ESLint** — Padronização e qualidade do código.
+- 🌐 **Netlify** — Hospedagem e deploy contínuo.
+
+---
+
+## 📁 Estrutura de pastas
+
+Abarth/
+├── node_modules/
+├── src/
+│ ├── components/
+│ │ └── App.tsx
+│ ├── index.css
+│ ├── main.tsx
+│ └── vite-env.d.ts
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
+
+yaml
+
+
+---
+
+## 🚀 Como executar o projeto localmente
+
+### 🔧 Pré-requisitos
+
+- [Node.js](https://nodejs.org/) (versão 18 ou superior)
+- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
+
+### 📦 Instalação
+
+```bash
+# Clone o repositório
+git clone https://github.com/jefinhozit0/abarth.git
+
+# Acesse a pasta do projeto
+cd abarth
+
+# Instale as dependências
+npm install
+# ou
+yarn install
+▶️ Executando o projeto
+bash
+# Inicie o servidor de desenvolvimento
+npm run dev
+# ou
+yarn dev
+O projeto estará disponível em http://localhost:5173
+
+🧑‍💻 Autor
+Desenvolvido por Jefferson Silva de Almeida
+📧 jefinhozit00@gmail.com
+💼 GitHub
