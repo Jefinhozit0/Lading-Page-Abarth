@@ -17,16 +17,6 @@ O principal objetivo foi aplicar:
 
 ---
 
-## 🖼️ Preview
-
-> 💡 *Veja abaixo uma prévia do site hospedado no Netlify.*
-
-![Preview do Projeto](https://www.netlify.com/img/deploy/button.svg)
-
-*(Substitua o link acima por uma captura real do seu site, ex: `/caminho/para/sua/imagem.png`)*
-
----
-
 ## 🛠️ Tecnologias Utilizadas
 
 | Categoria | Tecnologia | Descrição |
@@ -126,7 +116,7 @@ tornando o processo de publicação rápido e eficiente.
 | Detalhe | Informação |
 | :--- | :--- |
 | **Nome** | Jefferson Silva de Almeida |
-| **E-mail** | 📧 [jeffinzito00@gmail.com](mailto:jeffinzito00@gmail.com) |
+| **E-mail** | 📧 [jefinhozit00@gmail.com](mailto:jefinhozit00@gmail.com) |
 | **GitHub** | 💼 [github.com/Jefinhozit0](https://github.com/Jefinhozit0) |
 
 ---
