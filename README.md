@@ -23,7 +23,6 @@ O principal objetivo foi aplicar:
 
 ![Preview do Projeto](https://www.netlify.com/img/deploy/button.svg)
 
-*(Substitua o link acima por uma captura real do seu site, ex: `/caminho/para/sua/imagem.png`)*
 
 ---
 
@@ -81,7 +80,7 @@ Siga os passos abaixo para clonar o projeto e rodar o servidor de desenvolviment
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/seu-usuario/abarth.git
+git clone https://github.com/jefinhozit0/abarth.git
 
 # 2. Acesse a pasta do projeto
 cd abarth

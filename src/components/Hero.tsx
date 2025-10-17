@@ -99,7 +99,7 @@ const Hero = () => {
           <div className="relative">
             <div className="relative z-10 bg-gradient-to-br from-orange-500/20 to-transparent rounded-2xl p-8">
               <img 
-                src="https://images.pexels.com/photos/3807328/pexels-photo-3807328.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src="https://images.pexels.com/photos/34329583/pexels-photo-34329583.jpeg?auto=compress&cs=tinysrgb&w=600"
                 alt="Mecânico trabalhando"
                 className="w-full h-96 object-cover rounded-xl shadow-2xl"
               />

@@ -94,7 +94,7 @@ const Services = () => {
       title: 'Motor',
       description: 'Diagnóstico e reparo de motores com tecnologia avançada',
       icon: Car,
-      image: 'https://images.pexels.com/photos/3964341/pexels-photo-3964341.jpeg?auto=compress&cs=tinysrgb&w=600',
+      image: 'https://images.pexels.com/photos/4489765/pexels-photo-4489765.jpeg',
       details: {
         subtitle: 'Especialistas em Motores',
         fullDescription: 'Nossa equipe especializada realiza desde pequenos ajustes até revisões completas de motor, utilizando equipamentos de última geração.',

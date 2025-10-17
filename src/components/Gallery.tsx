@@ -8,7 +8,7 @@ const Gallery = () => {
   const beforeAfterImages = [
     {
       before: 'https://images.pexels.com/photos/3807319/pexels-photo-3807319.jpeg?auto=compress&cs=tinysrgb&w=600',
-      after: 'https://images.pexels.com/photos/3807328/pexels-photo-3807328.jpeg?auto=compress&cs=tinysrgb&w=600',
+      after: 'https://images.pexels.com/photos/34329583/pexels-photo-34329583.jpeg?auto=compress&cs=tinysrgb&w=600',
       title: 'Revisão de Motor'
     },
     {
@@ -25,11 +25,11 @@ const Gallery = () => {
 
   const workspaceImages = [
     {
-      url: 'https://images.pexels.com/photos/5835358/pexels-photo-5835358.jpeg?auto=compress&cs=tinysrgb&w=600',
+      url: 'https://images.pexels.com/photos/34329583/pexels-photo-34329583.jpeg?auto=compress&cs=tinysrgb&w=600',
       title: 'Área Principal da Oficina'
     },
     {
-      url: 'https://images.pexels.com/photos/3964335/pexels-photo-3964335.jpeg?auto=compress&cs=tinysrgb&w=600',
+      url: 'https://images.pexels.com/photos/4480453/pexels-photo-4480453.jpeg?auto=compress&cs=tinysrgb&w=600',
       title: 'Equipamentos Modernos'
     },
     {
@@ -48,7 +48,7 @@ const Gallery = () => {
       title: 'Equipe Técnica Especializada'
     },
     {
-      url: 'https://images.pexels.com/photos/3807328/pexels-photo-3807328.jpeg?auto=compress&cs=tinysrgb&w=600',
+      url: 'https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg',
       title: 'Mecânico Experiente'
     },
     {

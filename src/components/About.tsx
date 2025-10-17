@@ -64,7 +64,7 @@ const About = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-4">
               <img 
-                src="https://images.pexels.com/photos/5835358/pexels-photo-5935358.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src="https://images.pexels.com/photos/4489743/pexels-photo-4489743.jpeg?auto=compress&cs=tinysrgb&w=600"
                 alt="Oficina ABARTH"
                 className="w-full h-48 object-cover rounded-lg shadow-lg"
               />
@@ -76,7 +76,7 @@ const About = () => {
             </div>
             <div className="space-y-4 mt-8">
               <img 
-                src="https://images.pexels.com/photos/3964335/pexels-photo-3964335.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src="https://images.pexels.com/photos/4480453/pexels-photo-4480453.jpeg?auto=compress&cs=tinysrgb&w=600"
                 alt="Equipamentos modernos"
                 className="w-full h-56 object-cover rounded-lg shadow-lg"
               />
