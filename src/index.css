@@ -1,3 +1,90 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --brand: 249 115 22;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-ink-950 text-zinc-100 font-sans antialiased;
+  }
+
+  ::selection {
+    background: rgb(var(--brand) / 0.35);
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-4 sm:px-6;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-brand;
+  }
+
+  .eyebrow::before {
+    content: '';
+    @apply h-px w-6 bg-brand;
+  }
+
+  .heading {
+    @apply font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight sm:text-5xl;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-6 py-3.5 text-sm font-semibold transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand text-white shadow-lg shadow-brand/25 hover:brightness-110 active:translate-y-px;
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/15 text-white hover:border-white/40 hover:bg-white/5;
+  }
+
+  .field {
+    @apply w-full rounded-md border border-white/10 bg-ink-900 px-4 py-3 text-sm text-white placeholder:text-zinc-500 transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30;
+  }
+
+  .label {
+    @apply mb-2 block text-xs font-medium uppercase tracking-wider text-zinc-400;
+  }
+}
+
+/* Revelação ao rolar */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.grain {
+  background-image: radial-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -1,131 +1,40 @@
-# 🚗 Abarth
+# Modelo Warden Labs — Landing page para oficinas
 
-Este é um projeto **Front-end** desenvolvido com **React + TypeScript + Vite**, estilizado com **Tailwind CSS** e hospedado no **Netlify**.
+Landing page de alta conversão para oficinas mecânicas, desenvolvida pela **Warden Labs**.
+Demonstração com o cliente **Abarth Automotiva**.
 
-🔗 **Acesse o projeto online:** [abarth.netlify.app](https://abarth.netlify.app/)
+**Stack:** React 18 · TypeScript · Vite · Tailwind CSS · lucide-react
 
----
+## Seções
 
-## 🧠 Sobre o Projeto
+Hero com números e diferenciais · Serviços (com modal de detalhes) · Como funciona · Sobre ·
+Galeria (lightbox com teclado) · Avaliações · Dúvidas frequentes · Agendamento (envia para o WhatsApp) ·
+CTA final e rodapé · Botão flutuante de WhatsApp.
 
-O **Abarth** é um projeto de estudo focado no aprimoramento técnico e na exploração de tecnologias modernas.  
-O principal objetivo foi aplicar:
+## Como adaptar para um novo cliente
 
-- A **performance** e a velocidade do `Vite` no ambiente de desenvolvimento.  
-- A **segurança** e a manutenibilidade do código com `TypeScript`.  
-- O **design responsivo** e a metodologia *utility-first* do `Tailwind CSS`.
+Todo o conteúdo fica em **`src/config/site.ts`**. Os componentes não precisam ser alterados.
 
----
+| O quê | Onde |
+| :--- | :--- |
+| Nome, sigla, logo, ano de fundação | `business` |
+| Cor da marca (RGB, ex.: `'220 38 38'`) | `brandColor` |
+| WhatsApp, telefone, e-mail, endereço, mapa, horários, redes | `contact` |
+| Textos do topo e imagem de fundo | `hero` |
+| Números e diferenciais | `stats`, `highlights` |
+| Serviços (preço, duração, itens inclusos) | `services` |
+| Etapas, sobre, galeria, depoimentos, FAQ | `process`, `about`, `gallery`, `testimonials`, `faq` |
 
-## 🖼️ Preview
+Também ajuste o `<title>` e as meta tags em `index.html` e o `public/favicon.svg`.
 
-> 💡 *Veja abaixo uma prévia do site hospedado no Netlify.*
-
-![Preview do Projeto](https://www.netlify.com/img/deploy/button.svg)
-
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-| Categoria | Tecnologia | Descrição |
-| :--- | :--- | :--- |
-| **Framework & Linguagem** | ⚛️ **React** | Biblioteca principal para construção de interfaces de usuário. |
-|  | 🟦 **TypeScript** | Adiciona tipagem estática e melhora a segurança e a escalabilidade. |
-| **Ferramentas** | ⚡ **Vite** | Build tool rápido, com hot-reloading otimizado. |
-|  | 🎨 **Tailwind CSS** | Framework CSS *utility-first* para estilização moderna e responsiva. |
-|  | 🧹 **ESLint** | Ferramenta para padronização e garantia da qualidade do código. |
-| **Hospedagem** | ☁️ **Netlify** | Serviço de hospedagem e deploy contínuo integrado ao GitHub. |
-
----
-
-## 📁 Estrutura do Projeto
-
-A estrutura do projeto segue o padrão otimizado do `Vite` para aplicações `React + TypeScript`:
-
-```
-Abarth/
-├── node_modules/
-├── src/
-│   ├── components/
-│   │   └── App.tsx       # Componente principal
-│   ├── index.css
-│   ├── main.tsx          # Ponto de entrada da aplicação
-│   └── vite-env.d.ts
-├── .gitignore
-├── eslint.config.js
-├── index.html
-├── package.json
-├── postcss.config.js
-├── tailwind.config.js
-├── tsconfig.json
-├── vite.config.ts
-└── README.md
-```
-
----
-
-## 🚀 Como Executar Localmente
-
-### 🔧 Pré-requisitos
-
-Certifique-se de ter instalado em sua máquina:
-
-- [**Node.js**](https://nodejs.org/) (versão 18 ou superior)
-- **npm** (instalado com o Node.js) ou **yarn**
-
-### 📦 Instalação e Execução
-
-Siga os passos abaixo para clonar o projeto e rodar o servidor de desenvolvimento:
+## Rodando localmente
 
 ```bash
-# 1. Clone o repositório
-git clone https://github.com/jefinhozit0/abarth.git
-
-# 2. Acesse a pasta do projeto
-cd abarth
-
-# 3. Instale as dependências
 npm install
-# ou (se usar Yarn)
-yarn install
-
-# 4. Inicie o servidor de desenvolvimento
-npm run dev
-# ou
-yarn dev
+npm run dev      # desenvolvimento
+npm run build    # build de produção em dist/
 ```
-
-O projeto estará acessível em seu navegador em:  
-👉 [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## 🌍 Deploy Contínuo (GitHub → Netlify)
-
-O projeto está configurado para Deploy Contínuo (CD) utilizando a integração direta entre o GitHub e o Netlify.
-
-1. Faça login no [Netlify](https://www.netlify.com/).  
-2. Clique em **"Add new site" → "Import an existing project"**.  
-3. Escolha o repositório **abarth** do seu GitHub.  
-4. O Netlify detectará automaticamente as configurações de build:
-
-```
-Build command: npm run build
-Publish directory: dist
-```
-
-Após o primeiro deploy, qualquer novo commit na branch `main` atualizará o site automaticamente,  
-tornando o processo de publicação rápido e eficiente.
-
----
-
-## 👨‍💻 Autor
-
-| Detalhe | Informação |
-| :--- | :--- |
-| **Nome** | Jefferson Silva de Almeida |
-| **E-mail** | 📧 [jeffinzito00@gmail.com](mailto:jeffinzito00@gmail.com) |
-| **GitHub** | 💼 [github.com/Jefinhozit0](https://github.com/Jefinhozit0) |
-
----
+Desenvolvido por **Warden Labs**.
