@@ -112,7 +112,7 @@ export const site = {
       description: 'Manutenção preventiva para o carro rodar sem surpresas.',
       icon: Settings,
       image:
-        'https://images.pexels.com/photos/3964342/pexels-photo-3964342.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=800',
       subtitle: 'Manutenção preventiva completa',
       fullDescription:
         'Verificação de todos os sistemas do veículo, troca de óleo e filtros, análise de freios, suspensão e muito mais — seguindo o plano do fabricante.',

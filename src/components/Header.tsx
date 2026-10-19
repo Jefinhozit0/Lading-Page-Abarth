@@ -33,7 +33,8 @@ const Header = () => {
       },
       { rootMargin: '-45% 0px -50% 0px' }
     );
-    links.forEach(({ id }) => {
+    // Topo e agendamento também são observados para limpar o destaque fora das seções do menu
+    ['home', ...links.map(({ id }) => id), 'contact'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
