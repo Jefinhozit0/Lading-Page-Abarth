@@ -26,10 +26,11 @@ const Testimonials = () => (
       </div>
 
       <div className="columns-1 gap-5 md:columns-2 lg:columns-3">
-        {site.testimonials.map((t) => (
+        {site.testimonials.map((t, index) => (
           <figure
             key={t.name}
-            className="reveal mb-5 break-inside-avoid rounded-lg border border-white/10 bg-ink-900 p-6"
+            className="reveal mb-5 break-inside-avoid rounded-lg border border-white/10 bg-ink-900 p-6 hover:border-brand/40"
+            style={{ transitionDelay: `${(index % 3) * 100}ms` }}
           >
             <div className="flex items-center justify-between">
               <div className="flex text-brand" aria-label="5 estrelas">

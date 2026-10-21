@@ -93,7 +93,7 @@ const Contact = () => {
 
         <div className="grid gap-8 lg:grid-cols-[1fr_1.3fr]">
           {/* Informações */}
-          <div className="reveal flex flex-col gap-6">
+          <div className="reveal reveal-left flex flex-col gap-6">
             <ul className="divide-y divide-white/10 rounded-lg border border-white/10 bg-ink-900">
               {info.map(({ icon: Icon, title, body }) => (
                 <li key={title} className="flex gap-4 p-5">
@@ -122,7 +122,7 @@ const Contact = () => {
           {/* Formulário */}
           <form
             onSubmit={handleSubmit}
-            className="reveal rounded-lg border border-white/10 bg-ink-900 p-6 sm:p-8"
+            className="reveal reveal-right rounded-lg border border-white/10 bg-ink-900 p-6 sm:p-8"
           >
             <div className="grid gap-5 sm:grid-cols-2">
               <div>

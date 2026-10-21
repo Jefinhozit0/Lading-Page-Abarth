@@ -47,10 +47,11 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      className={`intro-down fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled || isMenuOpen ? 'border-b border-white/5 bg-ink-950/90 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
+      <div className="scroll-progress absolute inset-x-0 bottom-0 h-0.5 bg-brand" aria-hidden="true" />
       <div className="container-site flex h-16 items-center justify-between md:h-20">
         <a href="#home" aria-label={`${site.business.name} — início`}>
           <Logo />

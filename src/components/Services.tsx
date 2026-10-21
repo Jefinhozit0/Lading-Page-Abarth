@@ -37,7 +37,7 @@ const Services = () => {
               <button
                 key={service.title}
                 onClick={() => setSelected(service)}
-                className="reveal group relative flex min-h-[320px] flex-col justify-end overflow-hidden rounded-lg border border-white/10 bg-ink-900 p-6 text-left transition-colors hover:border-brand/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+                className="reveal shine group relative flex min-h-[320px] flex-col justify-end overflow-hidden rounded-lg border border-white/10 bg-ink-900 p-6 text-left transition-colors hover:border-brand/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
                 style={{ transitionDelay: `${(index % 3) * 80}ms` }}
               >
                 <img

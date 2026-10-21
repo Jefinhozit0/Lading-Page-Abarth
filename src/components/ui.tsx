@@ -1,5 +1,51 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { site } from '../config/site';
+
+/**
+ * Anima a parte numérica de valores como "15+", "1.000+" ou "90 dias"
+ * quando o elemento entra na tela, como um velocímetro subindo.
+ */
+export const CountUp = ({ value, duration = 1800 }: { value: string; duration?: number }) => {
+  const match = value.match(/^([\d.]+)(.*)$/);
+  const target = match ? Number(match[1].replace(/\./g, '')) : 0;
+  const animate = Boolean(match) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [current, setCurrent] = useState(animate ? 0 : target);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!animate || !el) return;
+    let frame = 0;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        const start = performance.now();
+        const tick = (now: number) => {
+          const t = Math.min(1, (now - start) / duration);
+          setCurrent(Math.round(target * (1 - Math.pow(2, -10 * t))));
+          if (t < 1) frame = requestAnimationFrame(tick);
+          else setCurrent(target);
+        };
+        frame = requestAnimationFrame(tick);
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, [animate, target, duration]);
+
+  if (!match) return <>{value}</>;
+  return (
+    <span ref={ref} className="tabular-nums">
+      {current.toLocaleString('pt-BR')}
+      {match[2]}
+    </span>
+  );
+};
 
 export const Logo = ({ compact = false }: { compact?: boolean }) => (
   <div className="flex items-center gap-3">
@@ -33,7 +79,11 @@ interface SectionHeaderProps {
 export const SectionHeader = ({ eyebrow, title, description, align = 'left' }: SectionHeaderProps) => (
   <div className={`reveal mb-12 max-w-2xl ${align === 'center' ? 'mx-auto text-center' : ''}`}>
     <span className="eyebrow">{eyebrow}</span>
-    <h2 className="heading mt-4 text-white">{title}</h2>
+    <h2 className="heading mt-4 text-white">
+      <span className="mask-line">
+        <span>{title}</span>
+      </span>
+    </h2>
     {description && <p className="mt-4 text-lg leading-relaxed text-zinc-400">{description}</p>}
   </div>
 );

@@ -1,3 +1,4 @@
+import { Car } from 'lucide-react';
 import { site } from '../config/site';
 import { SectionHeader } from './ui';
 
@@ -14,12 +15,19 @@ const Process = () => (
         description="Um processo simples e transparente, do agendamento à entrega das chaves."
       />
 
+      {/* Estrada: o carro avança pelas etapas conforme a rolagem */}
+      <div data-scroll className="road relative mb-8 h-8" aria-hidden="true">
+        <div className="road-lane absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2" />
+        <div className="road-fill absolute left-0 top-1/2 h-0.5 -translate-y-1/2 bg-gradient-to-r from-brand/0 to-brand" />
+        <Car className="road-car absolute top-1/2 h-8 w-8 -translate-y-1/2 text-brand drop-shadow-[0_0_12px_rgb(var(--brand)/0.6)]" />
+      </div>
+
       <ol className="grid gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
         {site.process.map(({ icon: Icon, title, text }, index) => (
           <li
             key={title}
-            className="reveal relative bg-ink-900 p-8"
-            style={{ transitionDelay: `${index * 90}ms` }}
+            className="reveal reveal-right relative bg-ink-900 p-8"
+            style={{ transitionDelay: `${index * 120}ms` }}
           >
             <span className="font-display text-6xl font-extrabold text-white/5">
               {String(index + 1).padStart(2, '0')}

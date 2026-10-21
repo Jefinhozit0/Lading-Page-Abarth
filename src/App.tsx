@@ -10,9 +10,11 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import { useReveal } from './hooks/useReveal';
+import { useScrollFx } from './hooks/useScrollFx';
 
 function App() {
   useReveal();
+  useScrollFx();
 
   return (
     <div className="min-h-screen overflow-x-hidden">

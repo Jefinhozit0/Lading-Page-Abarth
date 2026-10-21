@@ -48,9 +48,10 @@ const Gallery = () => {
             <button
               key={image.url}
               onClick={() => setIndex(i)}
-              className={`reveal group relative overflow-hidden rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand ${
+              className={`reveal reveal-wipe group relative overflow-hidden rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand ${
                 mosaic[i % mosaic.length]
               }`}
+              style={{ transitionDelay: `${(i % 4) * 120}ms` }}
               aria-label={`Ampliar: ${image.title}`}
             >
               <img
