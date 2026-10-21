@@ -1,330 +1,179 @@
-import React, { useState } from 'react';
-import { MapPin, Phone, Clock, Mail, MessageSquare, Send } from 'lucide-react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { Clock, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { site, whatsappLink } from '../config/site';
+import { SectionHeader } from './ui';
+
+const emptyForm = {
+  name: '',
+  phone: '',
+  vehicle: '',
+  service: '',
+  preferredDate: '',
+  preferredTime: '',
+  message: '',
+};
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    vehicle: '',
-    service: '',
-    message: '',
-    preferredDate: '',
-    preferredTime: ''
-  });
+  const [form, setForm] = useState(emptyForm);
+  const { contact } = site;
+  const today = new Date().toISOString().split('T')[0];
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState('');
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // O agendamento é enviado como mensagem pronta no WhatsApp da oficina
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simular envio do formulário
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitMessage('Solicitação enviada com sucesso! Entraremos em contato em breve.');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        vehicle: '',
-        service: '',
-        message: '',
-        preferredDate: '',
-        preferredTime: ''
-      });
-      
-      setTimeout(() => {
-        setSubmitMessage('');
-      }, 5000);
-    }, 2000);
+    const date = form.preferredDate ? form.preferredDate.split('-').reverse().join('/') : '';
+    const details = [
+      `*Nome:* ${form.name}`,
+      `*Telefone:* ${form.phone}`,
+      form.vehicle && `*Veículo:* ${form.vehicle}`,
+      form.service && `*Serviço:* ${form.service}`,
+      date && `*Data preferida:* ${date}${form.preferredTime ? ` às ${form.preferredTime}` : ''}`,
+      form.message && `*Mensagem:* ${form.message}`,
+    ].filter(Boolean);
+    const message = [`Olá! Gostaria de agendar um serviço na ${site.business.name}.`, '', ...details].join('\n');
+
+    window.open(whatsappLink(message), '_blank', 'noopener,noreferrer');
+    setForm(emptyForm);
   };
 
-  const services = [
-    'Revisão Completa',
-    'Sistema Elétrico',
-    'Freios',
-    'Alinhamento e Balanceamento',
-    'Motor',
-    'Suspensão',
-    'Ar Condicionado',
-    'Diagnóstico Geral',
-    'Outro'
+  const info = [
+    {
+      icon: MapPin,
+      title: 'Endereço',
+      body: (
+        <>
+          {contact.address.street}
+          <br />
+          {contact.address.district} — {contact.address.city}
+        </>
+      ),
+    },
+    {
+      icon: Phone,
+      title: 'Telefone / WhatsApp',
+      body: <a href={`tel:+${contact.whatsapp}`} className="hover:text-brand">{contact.phoneDisplay}</a>,
+    },
+    {
+      icon: Mail,
+      title: 'E-mail',
+      body: <a href={`mailto:${contact.email}`} className="break-all hover:text-brand">{contact.email}</a>,
+    },
+    {
+      icon: Clock,
+      title: 'Horário',
+      body: (
+        <ul className="space-y-0.5">
+          {contact.hours.map((h) => (
+            <li key={h.days}>
+              {h.days}: <span className="text-white">{h.time}</span>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
   ];
 
   return (
-    <section id="contact" className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Entre em Contato</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Estamos prontos para atender você! Entre em contato conosco para agendar 
-            seu serviço ou tirar suas dúvidas.
-          </p>
-        </div>
+    <section id="contact" className="py-24 md:py-32">
+      <div className="container-site">
+        <SectionHeader
+          eyebrow="Agendamento"
+          title={
+            <>
+              Agende seu <span className="text-brand">serviço</span>
+            </>
+          }
+          description="Preencha os dados e envie direto para o nosso WhatsApp. Respondemos em minutos no horário comercial."
+        />
 
-        <div className="grid lg:grid-cols-2 gap-16">
-          {/* Contact Information */}
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">Informações de Contato</h3>
-            
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <MapPin className="h-6 w-6 text-orange-500" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900">Endereço</h4>
-                  <p className="text-gray-600">Rua Salvador Simões, 1445<br />Vila Dom Pedro I - São Paulo, SP</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone className="h-6 w-6 text-orange-500" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900">Telefone</h4>
-                  <p className="text-gray-600">(11) 98681-661 (WhatsApp)</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Mail className="h-6 w-6 text-orange-500" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900">Email</h4>
-                  <p className="text-gray-600">oficina.abarth@abarthautomotiva.com.br</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Clock className="h-6 w-6 text-orange-500" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900">Horário de Funcionamento</h4>
-                  <div className="text-gray-600">
-                    <p>Segunda à Sexta: 8h às 18h</p>
-                    <p>Sábado: 8h às 12h</p>
-                    <p>Domingo: Fechado</p>
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.3fr]">
+          {/* Informações */}
+          <div className="reveal reveal-left flex flex-col gap-6">
+            <ul className="divide-y divide-white/10 rounded-lg border border-white/10 bg-ink-900">
+              {info.map(({ icon: Icon, title, body }) => (
+                <li key={title} className="flex gap-4 p-5">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand/10 text-brand">
+                    <Icon className="h-5 w-5" />
                   </div>
-                </div>
-              </div>
-            </div>
+                  <div className="text-sm leading-relaxed text-zinc-400">
+                    <div className="mb-1 font-semibold text-white">{title}</div>
+                    {body}
+                  </div>
+                </li>
+              ))}
+            </ul>
 
-            {/* WhatsApp Button */}
-            <div className="mt-8">
-              <a 
-                href="https://wa.me/551198681661"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-8 py-4 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                <MessageSquare className="mr-3 h-5 w-5" />
-                Falar no WhatsApp
-              </a>
-            </div>
-
-            {/* Map */}
-            <div className="mt-12">
-              <h4 className="text-xl font-bold text-gray-900 mb-4">Localização</h4>
-              <div className="bg-gray-200 rounded-xl h-64 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="h-12 w-12 text-orange-500 mx-auto mb-2" />
-                  <p className="text-gray-600">
-                    Mapa interativo<br />
-                    <span className="text-sm">Integração com Google Maps</span>
-                  </p>
-                </div>
-              </div>
-            </div>
+            {contact.mapEmbedUrl && (
+              <iframe
+                title={`Mapa — ${site.business.name}`}
+                src={contact.mapEmbedUrl}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-64 w-full flex-1 rounded-lg border border-white/10 grayscale invert-[0.9] hue-rotate-180"
+              />
+            )}
           </div>
 
-          {/* Contact Form */}
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">Formulário de Agendamento</h3>
-            
-            {submitMessage && (
-              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
-                {submitMessage}
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Nome Completo *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                    placeholder="Seu nome completo"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                    placeholder="seu.email@exemplo.com"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                    Telefone *
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                    placeholder="(11) 99999-9999"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="vehicle" className="block text-sm font-medium text-gray-700 mb-2">
-                    Veículo
-                  </label>
-                  <input
-                    type="text"
-                    id="vehicle"
-                    name="vehicle"
-                    value={formData.vehicle}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                    placeholder="Ex: Honda Civic 2020"
-                  />
-                </div>
-              </div>
-
+          {/* Formulário */}
+          <form
+            onSubmit={handleSubmit}
+            className="reveal reveal-right rounded-lg border border-white/10 bg-ink-900 p-6 sm:p-8"
+          >
+            <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
-                  Serviço Desejado
-                </label>
-                <select
-                  id="service"
-                  name="service"
-                  value={formData.service}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                >
-                  <option value="">Selecione um serviço</option>
-                  {services.map(service => (
-                    <option key={service} value={service}>{service}</option>
+                <label htmlFor="name" className="label">Nome *</label>
+                <input id="name" name="name" required value={form.name} onChange={handleChange} className="field" placeholder="Seu nome" autoComplete="name" />
+              </div>
+              <div>
+                <label htmlFor="phone" className="label">Telefone *</label>
+                <input id="phone" name="phone" type="tel" required value={form.phone} onChange={handleChange} className="field" placeholder="(11) 99999-9999" autoComplete="tel" />
+              </div>
+              <div>
+                <label htmlFor="vehicle" className="label">Veículo</label>
+                <input id="vehicle" name="vehicle" value={form.vehicle} onChange={handleChange} className="field" placeholder="Marca, modelo e ano" />
+              </div>
+              <div>
+                <label htmlFor="service" className="label">Serviço</label>
+                <select id="service" name="service" value={form.service} onChange={handleChange} className="field">
+                  <option value="">Selecione</option>
+                  {site.services.map((s) => (
+                    <option key={s.title} value={s.title}>{s.title}</option>
+                  ))}
+                  <option value="Diagnóstico geral">Diagnóstico geral</option>
+                  <option value="Outro">Outro</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="preferredDate" className="label">Data preferida</label>
+                <input id="preferredDate" name="preferredDate" type="date" min={today} value={form.preferredDate} onChange={handleChange} className="field [color-scheme:dark]" />
+              </div>
+              <div>
+                <label htmlFor="preferredTime" className="label">Horário</label>
+                <select id="preferredTime" name="preferredTime" value={form.preferredTime} onChange={handleChange} className="field">
+                  <option value="">Selecione</option>
+                  {site.bookingTimes.map((t) => (
+                    <option key={t} value={t}>{t}</option>
                   ))}
                 </select>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="preferredDate" className="block text-sm font-medium text-gray-700 mb-2">
-                    Data Preferencial
-                  </label>
-                  <input
-                    type="date"
-                    id="preferredDate"
-                    name="preferredDate"
-                    value={formData.preferredDate}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="preferredTime" className="block text-sm font-medium text-gray-700 mb-2">
-                    Horário Preferencial
-                  </label>
-                  <select
-                    id="preferredTime"
-                    name="preferredTime"
-                    value={formData.preferredTime}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                  >
-                    <option value="">Selecione um horário</option>
-                    <option value="08:00">08:00</option>
-                    <option value="09:00">09:00</option>
-                    <option value="10:00">10:00</option>
-                    <option value="11:00">11:00</option>
-                    <option value="14:00">14:00</option>
-                    <option value="15:00">15:00</option>
-                    <option value="16:00">16:00</option>
-                    <option value="17:00">17:00</option>
-                  </select>
-                </div>
+              <div className="sm:col-span-2">
+                <label htmlFor="message" className="label">Conte o que está acontecendo</label>
+                <textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} className="field resize-none" placeholder="Ex.: barulho ao frear, luz da injeção acesa..." />
               </div>
+            </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Descrição do Problema / Observações
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors resize-vertical"
-                  placeholder="Descreva o problema do seu veículo ou deixe observações sobre o serviço..."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full py-4 px-8 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center ${
-                  isSubmitting 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-orange-500 hover:bg-orange-600 text-white'
-                }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                    Enviando...
-                  </>
-                ) : (
-                  <>
-                    <Send className="mr-2 h-5 w-5" />
-                    Enviar Solicitação
-                  </>
-                )}
-              </button>
-            </form>
-
-            <p className="text-sm text-gray-500 mt-4 text-center">
-              * Após o envio, entraremos em contato para confirmar o agendamento
+            <button type="submit" className="btn-primary mt-6 w-full">
+              <Send className="h-4 w-4" /> Enviar pelo WhatsApp
+            </button>
+            <p className="mt-3 text-center text-xs text-zinc-500">
+              Ao enviar, abriremos o WhatsApp com sua mensagem pronta.
             </p>
-          </div>
+          </form>
         </div>
       </div>
     </section>

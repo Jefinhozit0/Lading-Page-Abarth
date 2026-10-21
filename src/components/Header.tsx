@@ -1,141 +1,119 @@
-import React, { useState } from 'react';
-import { Menu, X, Phone, MapPin } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { site, whatsappLink } from '../config/site';
+import { Logo, WhatsAppIcon } from './ui';
+
+const links = [
+  { id: 'services', label: 'Serviços' },
+  { id: 'process', label: 'Como funciona' },
+  { id: 'about', label: 'Sobre' },
+  { id: 'gallery', label: 'Galeria' },
+  { id: 'testimonials', label: 'Avaliações' },
+  { id: 'faq', label: 'Dúvidas' },
+];
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('');
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMenuOpen(false);
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    // Topo e agendamento também são observados para limpar o destaque fora das seções do menu
+    ['home', ...links.map(({ id }) => id), 'contact'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+  }, [isMenuOpen]);
 
   return (
-    <header className="bg-black/95 backdrop-blur-sm text-white fixed w-full top-0 z-50 shadow-lg">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">A</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-orange-500">ABARTH</h1>
-              <p className="text-xs text-gray-300">AUTOMOTIVA</p>
-            </div>
-          </div>
+    <header
+      className={`intro-down fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled || isMenuOpen ? 'border-b border-white/5 bg-ink-950/90 backdrop-blur-md' : 'bg-transparent'
+      }`}
+    >
+      <div className="scroll-progress absolute inset-x-0 bottom-0 h-0.5 bg-brand" aria-hidden="true" />
+      <div className="container-site flex h-16 items-center justify-between md:h-20">
+        <a href="#home" aria-label={`${site.business.name} — início`}>
+          <Logo />
+        </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <button 
-              onClick={() => scrollToSection('home')}
-              className="hover:text-orange-500 transition-colors"
+        <nav className="hidden items-center gap-7 lg:flex" aria-label="Principal">
+          {links.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className={`text-sm font-medium transition-colors ${
+                active === id ? 'text-brand' : 'text-zinc-300 hover:text-white'
+              }`}
             >
-              Início
-            </button>
-            <button 
-              onClick={() => scrollToSection('services')}
-              className="hover:text-orange-500 transition-colors"
-            >
-              Serviços
-            </button>
-            <button 
-              onClick={() => scrollToSection('about')}
-              className="hover:text-orange-500 transition-colors"
-            >
-              Sobre
-            </button>
-            <button 
-              onClick={() => scrollToSection('gallery')}
-              className="hover:text-orange-500 transition-colors"
-            >
-              Galeria
-            </button>
-            <button 
-              onClick={() => scrollToSection('testimonials')}
-              className="hover:text-orange-500 transition-colors"
-            >
-              Depoimentos
-            </button>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="hover:text-orange-500 transition-colors"
-            >
-              Contato
-            </button>
-          </nav>
+              {label}
+            </a>
+          ))}
+        </nav>
 
-          {/* Contact Info */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm">
-              <Phone className="h-4 w-4 text-orange-500" />
-              <span>(11) 986816611</span>
-            </div>
-            <div className="flex items-center space-x-2 text-sm">
-              <MapPin className="h-4 w-4 text-orange-500" />
-              <span>São Paulo, SP</span>
-            </div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={toggleMenu}
-            className="md:hidden p-2"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+        <div className="hidden items-center gap-3 lg:flex">
+          <a href={`tel:+${site.contact.whatsapp}`} className="text-sm font-medium text-zinc-300 hover:text-white">
+            {site.contact.phoneDisplay}
+          </a>
+          <a href="#contact" className="btn-primary px-5 py-2.5">
+            Agendar
+          </a>
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-black/95 border-t border-gray-800">
-            <nav className="py-4 space-y-4">
-              <button 
-                onClick={() => scrollToSection('home')}
-                className="block w-full text-left px-4 py-2 hover:text-orange-500 transition-colors"
-              >
-                Início
-              </button>
-              <button 
-                onClick={() => scrollToSection('services')}
-                className="block w-full text-left px-4 py-2 hover:text-orange-500 transition-colors"
-              >
-                Serviços
-              </button>
-              <button 
-                onClick={() => scrollToSection('about')}
-                className="block w-full text-left px-4 py-2 hover:text-orange-500 transition-colors"
-              >
-                Sobre
-              </button>
-              <button 
-                onClick={() => scrollToSection('gallery')}
-                className="block w-full text-left px-4 py-2 hover:text-orange-500 transition-colors"
-              >
-                Galeria
-              </button>
-              <button 
-                onClick={() => scrollToSection('testimonials')}
-                className="block w-full text-left px-4 py-2 hover:text-orange-500 transition-colors"
-              >
-                Depoimentos
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')}
-                className="block w-full text-left px-4 py-2 hover:text-orange-500 transition-colors"
-              >
-                Contato
-              </button>
-            </nav>
-          </div>
-        )}
+        <button
+          onClick={() => setIsMenuOpen((open) => !open)}
+          className="-mr-2 p-2 text-white lg:hidden"
+          aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
+
+      {isMenuOpen && (
+        <div className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/5 bg-ink-950 lg:hidden">
+          <nav className="container-site flex flex-col py-6" aria-label="Menu móvel">
+            {links.map(({ id, label }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={() => setIsMenuOpen(false)}
+                className="border-b border-white/5 py-4 font-display text-2xl font-semibold uppercase text-white"
+              >
+                {label}
+              </a>
+            ))}
+            <div className="mt-8 grid gap-3">
+              <a href="#contact" onClick={() => setIsMenuOpen(false)} className="btn-primary">
+                Agendar serviço
+              </a>
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+                <WhatsAppIcon /> WhatsApp
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

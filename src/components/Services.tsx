@@ -1,274 +1,150 @@
-import React, { useState } from 'react';
-import { Settings, Zap, Gauge, Wrench, Car, Shield, ArrowRight, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowUpRight, Check, Clock, Tag, X } from 'lucide-react';
+import { site, whatsappLink, type Service } from '../config/site';
+import { SectionHeader, WhatsAppIcon } from './ui';
 
 const Services = () => {
-  const [selectedService, setSelectedService] = useState<number | null>(null);
+  const [selected, setSelected] = useState<Service | null>(null);
 
-  const services = [
-    {
-      id: 1,
-      title: 'Revisão Completa',
-      description: 'Manutenção preventiva para garantir o bom funcionamento do seu veículo',
-      icon: Settings,
-      image: 'https://images.pexels.com/photos/3964342/pexels-photo-3964342.jpeg?auto=compress&cs=tinysrgb&w=600',
-      details: {
-        subtitle: 'Manutenção Preventiva Completa',
-        fullDescription: 'Nossa revisão completa inclui verificação de todos os sistemas do veículo, troca de óleo e filtros, análise do sistema de freios, verificação da suspensão e muito mais.',
-        services: [
-          'Troca de óleo e filtros',
-          'Verificação do sistema de freios',
-          'Análise da suspensão e direção',
-          'Teste do sistema elétrico',
-          'Verificação de pneus e alinhamento',
-          'Análise do sistema de arrefecimento'
-        ],
-        price: 'A partir de R$ 150,00',
-        duration: '2-3 horas'
-      }
-    },
-    {
-      id: 2,
-      title: 'Sistema Elétrico',
-      description: 'Diagnóstico e reparo de problemas elétricos automotivos',
-      icon: Zap,
-      image: 'https://images.pexels.com/photos/4489702/pexels-photo-4489702.jpeg?auto=compress&cs=tinysrgb&w=600',
-      details: {
-        subtitle: 'Especialistas em Elétrica Automotiva',
-        fullDescription: 'Contamos com equipamentos modernos para diagnóstico preciso de problemas elétricos, desde alternadores e baterias até sistemas de injeção eletrônica.',
-        services: [
-          'Teste de alternador e bateria',
-          'Diagnóstico de injeção eletrônica',
-          'Reparo de chicotes elétricos',
-          'Instalação de acessórios',
-          'Sistema de ignição',
-          'Ar condicionado automotivo'
-        ],
-        price: 'A partir de R$ 80,00',
-        duration: '1-4 horas'
-      }
-    },
-    {
-      id: 3,
-      title: 'Freios',
-      description: 'Manutenção e reparo completo do sistema de freios',
-      icon: Shield,
-      image: 'https://images.pexels.com/photos/6870318/pexels-photo-6870318.jpeg?auto=compress&cs=tinysrgb&w=600',
-      details: {
-        subtitle: 'Segurança em Primeiro Lugar',
-        fullDescription: 'Oferecemos serviços completos de freios, desde troca de pastilhas até revisão completa do sistema hidráulico, garantindo sua segurança.',
-        services: [
-          'Troca de pastilhas e discos',
-          'Revisão do sistema hidráulico',
-          'Sangria do sistema',
-          'Troca de fluido de freio',
-          'Regulagem de freio de mão',
-          'Teste de eficiência'
-        ],
-        price: 'A partir de R$ 120,00',
-        duration: '2-3 horas'
-      }
-    },
-    {
-      id: 4,
-      title: 'Alinhamento e Balanceamento',
-      description: 'Alinhamento e balanceamento para maior durabilidade dos pneus',
-      icon: Gauge,
-      image: 'https://images.pexels.com/photos/5835359/pexels-photo-5835359.jpeg?auto=compress&cs=tinysrgb&w=600',
-      details: {
-        subtitle: 'Economia e Conforto de Rodagem',
-        fullDescription: 'Realizamos alinhamento computadorizado e balanceamento de rodas para garantir maior vida útil dos pneus e conforto na direção.',
-        services: [
-          'Alinhamento computadorizado',
-          'Balanceamento de rodas',
-          'Verificação de pneus',
-          'Análise da suspensão',
-          'Regulagem da geometria',
-          'Teste de direção'
-        ],
-        price: 'A partir de R$ 60,00',
-        duration: '1-2 horas'
-      }
-    },
-    {
-      id: 5,
-      title: 'Motor',
-      description: 'Diagnóstico e reparo de motores com tecnologia avançada',
-      icon: Car,
-      image: 'https://images.pexels.com/photos/4489765/pexels-photo-4489765.jpeg',
-      details: {
-        subtitle: 'Especialistas em Motores',
-        fullDescription: 'Nossa equipe especializada realiza desde pequenos ajustes até revisões completas de motor, utilizando equipamentos de última geração.',
-        services: [
-          'Retífica de motores',
-          'Troca de correia dentada',
-          'Reparo de cabeçote',
-          'Sistema de injeção',
-          'Troca de velas e bobinas',
-          'Limpeza de bicos injetores'
-        ],
-        price: 'A partir de R$ 200,00',
-        duration: '4-8 horas'
-      }
-    },
-    {
-      id: 6,
-      title: 'Suspensão',
-      description: 'Manutenção completa do sistema de suspensão',
-      icon: Wrench,
-      image: 'https://images.pexels.com/photos/5835325/pexels-photo-5835325.jpeg?auto=compress&cs=tinysrgb&w=600',
-      details: {
-        subtitle: 'Conforto e Estabilidade',
-        fullDescription: 'Realizamos manutenção completa do sistema de suspensão para garantir conforto, estabilidade e segurança na condução.',
-        services: [
-          'Troca de amortecedores',
-          'Revisão de molas',
-          'Coxins e buchas',
-          'Batentes de suspensão',
-          'Bieletas e terminais',
-          'Teste de estabilidade'
-        ],
-        price: 'A partir de R$ 100,00',
-        duration: '2-4 horas'
-      }
-    }
-  ];
-
-  const openServiceModal = (serviceId: number) => {
-    setSelectedService(serviceId);
-  };
-
-  const closeServiceModal = () => {
-    setSelectedService(null);
-  };
-
-  const selectedServiceData = services.find(service => service.id === selectedService);
+  useEffect(() => {
+    if (!selected) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setSelected(null);
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [selected]);
 
   return (
-    <section id="services" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Nossos Serviços</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Oferecemos uma gama completa de serviços automotivos com qualidade profissional 
-            e preços justos para manter seu veículo sempre em perfeito estado.
-          </p>
-        </div>
+    <section id="services" className="py-24 md:py-32">
+      <div className="container-site">
+        <SectionHeader
+          eyebrow="Serviços"
+          title={
+            <>
+              Tudo que seu carro precisa, <span className="text-brand">num só lugar</span>
+            </>
+          }
+          description="Mecânica completa com preço justo e prazo combinado. Toque em um serviço para ver o que está incluso."
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service) => {
-            const IconComponent = service.icon;
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {site.services.map((service, index) => {
+            const Icon = service.icon;
             return (
-              <div 
-                key={service.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              <button
+                key={service.title}
+                onClick={() => setSelected(service)}
+                className="reveal shine group relative flex min-h-[320px] flex-col justify-end overflow-hidden rounded-lg border border-white/10 bg-ink-900 p-6 text-left transition-colors hover:border-brand/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+                style={{ transitionDelay: `${(index % 3) * 80}ms` }}
               >
+                <img
+                  src={service.image}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover opacity-30 transition-all duration-500 group-hover:scale-105 group-hover:opacity-45"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-transparent" />
+
+                <div className="absolute left-6 top-6 flex h-11 w-11 items-center justify-center rounded-md bg-brand text-white">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <span className="absolute right-6 top-6 font-display text-sm font-semibold text-zinc-500">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+
                 <div className="relative">
-                  <img 
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute top-4 left-4 w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
-                    <IconComponent className="h-6 w-6 text-white" />
+                  <h3 className="font-display text-2xl font-bold uppercase text-white">{service.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-300">{service.description}</p>
+                  <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-sm">
+                    <span className="font-medium text-zinc-400">{service.price}</span>
+                    <span className="inline-flex items-center gap-1 font-semibold text-brand">
+                      Detalhes
+                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </span>
                   </div>
                 </div>
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
-                  <p className="text-gray-600 mb-4">{service.description}</p>
-                  
-                  <button
-                    onClick={() => openServiceModal(service.id)}
-                    className="inline-flex items-center text-orange-500 hover:text-orange-600 font-semibold transition-colors"
-                  >
-                    Saiba mais
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </button>
-                </div>
-              </div>
+              </button>
             );
           })}
         </div>
       </div>
 
-      {/* Service Modal */}
-      {selectedService && selectedServiceData && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="relative">
-              <img 
-                src={selectedServiceData.image}
-                alt={selectedServiceData.title}
-                className="w-full h-64 object-cover"
-              />
+      {selected && (
+        <div
+          className="fixed inset-0 z-[60] flex items-end justify-center bg-black/70 backdrop-blur-sm sm:items-center sm:p-4"
+          onClick={() => setSelected(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="service-title"
+        >
+          <div
+            className="max-h-[92dvh] w-full max-w-3xl overflow-y-auto rounded-t-2xl border border-white/10 bg-ink-900 sm:rounded-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative h-48 sm:h-60">
+              <img src={selected.image} alt="" className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-900 to-transparent" />
               <button
-                onClick={closeServiceModal}
-                className="absolute top-4 right-4 w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-70 transition-colors"
+                onClick={() => setSelected(null)}
+                className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80"
+                aria-label="Fechar"
+                autoFocus
               >
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5" />
               </button>
             </div>
-            
-            <div className="p-8">
-              <div className="flex items-center mb-4">
-                <selectedServiceData.icon className="h-8 w-8 text-orange-500 mr-3" />
+
+            <div className="p-6 sm:p-8">
+              <span className="eyebrow">{selected.subtitle}</span>
+              <h3 id="service-title" className="mt-3 font-display text-3xl font-bold uppercase text-white sm:text-4xl">
+                {selected.title}
+              </h3>
+              <p className="mt-4 leading-relaxed text-zinc-300">{selected.fullDescription}</p>
+
+              <div className="mt-8 grid gap-8 md:grid-cols-[1.4fr_1fr]">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900">{selectedServiceData.title}</h3>
-                  <p className="text-orange-500 font-medium">{selectedServiceData.details.subtitle}</p>
-                </div>
-              </div>
-              
-              <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-                {selectedServiceData.details.fullDescription}
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-4">Serviços Inclusos:</h4>
-                  <ul className="space-y-2">
-                    {selectedServiceData.details.services.map((item, index) => (
-                      <li key={index} className="flex items-center text-gray-600">
-                        <div className="w-2 h-2 bg-orange-500 rounded-full mr-3"></div>
+                  <h4 className="label">O que está incluso</h4>
+                  <ul className="space-y-2.5">
+                    {selected.includes.map((item) => (
+                      <li key={item} className="flex items-start gap-3 text-sm text-zinc-200">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-900 mb-2">Preço:</h4>
-                    <p className="text-2xl font-bold text-orange-500">{selectedServiceData.details.price}</p>
+
+                <div className="space-y-4">
+                  <div className="rounded-lg border border-white/10 bg-ink-950 p-4">
+                    <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-zinc-400">
+                      <Tag className="h-3.5 w-3.5" /> Investimento
+                    </div>
+                    <div className="mt-1 font-display text-2xl font-bold text-brand">{selected.price}</div>
                   </div>
-                  
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-900 mb-2">Tempo Estimado:</h4>
-                    <p className="text-gray-600">{selectedServiceData.details.duration}</p>
-                  </div>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <a 
-                      href="https://wa.me/5511986816611"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors"
-                    >
-                      Agendar no WhatsApp
-                    </a>
-                    <button
-                      onClick={() => {
-                        closeServiceModal();
-                        const element = document.getElementById('contact');
-                        if (element) {
-                          element.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }}
-                      className="inline-flex items-center justify-center px-6 py-3 border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white rounded-lg font-semibold transition-colors"
-                    >
-                      Formulário de Contato
-                    </button>
+                  <div className="rounded-lg border border-white/10 bg-ink-950 p-4">
+                    <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-zinc-400">
+                      <Clock className="h-3.5 w-3.5" /> Tempo estimado
+                    </div>
+                    <div className="mt-1 font-semibold text-white">{selected.duration}</div>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href={whatsappLink(`Olá! Gostaria de agendar: ${selected.title}.`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary flex-1"
+                >
+                  <WhatsAppIcon /> Agendar pelo WhatsApp
+                </a>
+                <a href="#contact" onClick={() => setSelected(null)} className="btn-ghost flex-1">
+                  Usar o formulário
+                </a>
               </div>
             </div>
           </div>
